@@ -22,8 +22,8 @@ button{font:inherit;cursor:pointer}
 .lock-screen{height:calc(100% - 23px);position:relative;display:flex;align-items:center;flex-direction:column;overflow:hidden;padding:25px 16px 12px;text-align:center;background:linear-gradient(#fff4 0 0),url("assets/floral-wallpaper.jpg") center/cover}
 .lock-screen:after{content:"";position:absolute;inset:0;background:#fff4;pointer-events:none}
 .lock-screen>*{position:relative;z-index:1}
-.lock-date{font:italic 600 17px "Cormorant Garamond",serif;letter-spacing:1.5px;color:#856348;text-shadow:0 1px #fff}
-.lock-clock{font:italic 600 38px "Cormorant Garamond",serif;color:#79543f;margin-top:5px;text-shadow:0 1px #fff}
+.lock-date{font:italic 600 14px "Cormorant Garamond",serif;letter-spacing:1.5px;color:#856348;text-shadow:0 1px #fff}
+.lock-clock{font:italic 600 30px "Cormorant Garamond",serif;color:#79543f;margin-top:5px;text-shadow:0 1px #fff}
 .lock-welcome{font:12px "Cormorant Garamond",serif;letter-spacing:4px;margin-top:48px;color:#76503e}
 .lock-logo{font:italic 600 clamp(39px,10vw,55px) "Playfair Display",serif;color:#a96878;text-shadow:2px 2px #fff,-1px -1px #fff,0 3px 4px #76503c55;line-height:1.05;margin-top:4px}
 .lock-jp{font-size:13px;letter-spacing:2px;color:#76503e;margin-top:10px}
@@ -32,7 +32,7 @@ button{font:inherit;cursor:pointer}
 .unlock-button small{font:9px "Zen Old Mincho",serif;display:block}
 .lock-bottom{font-size:9px;letter-spacing:1px;color:#815f50}
 .hidden{display:none!important}
-.home-screen{height:calc(100% - 23px);position:relative;background:url("assets/home-reference.jpg") center/cover}
+.home-screen{height:calc(100% - 23px);position:relative;background:linear-gradient(#fff5,#fff2),url("assets/floral-wallpaper.jpg") center/cover}
 .home-screen:before{content:"";position:absolute;inset:0;background:linear-gradient(#fff8,#fff3)}
 .home-content{position:relative;height:100%;padding:12px 13px 14px;display:flex;flex-direction:column;align-items:center}
 .home-date{font:italic 600 14px "Cormorant Garamond",serif;letter-spacing:1.4px;color:#76513f;margin-top:3px}
@@ -52,7 +52,7 @@ button{font:inherit;cursor:pointer}
 .diary-art{background:linear-gradient(135deg,#f7e4d0,#d99caf);font-size:34px}
 .calendar-art{background:linear-gradient(135deg,#fff,#f2c4d2);font-size:25px}
 .character-art{background:linear-gradient(135deg,#fff7ed,#e9c6cf);font:30px "Cormorant Garamond",serif;color:#94634f}
-.app-icon small{font:10px "Cormorant Garamond",serif;font-weight:700;text-transform:uppercase;text-shadow:0 1px white;letter-spacing:.3px}
+.app-icon small{font:10px "Cormorant Garamond",serif;font-weight:700;text-transform:lowercase;text-shadow:0 1px white;letter-spacing:.3px}
 .home-note{margin-top:auto;font:italic 12px "Cormorant Garamond",serif;color:#805a4a;letter-spacing:.7px}
 .app-screen{height:calc(100% - 23px);background:#fff8f1;display:flex;flex-direction:column;position:relative}
 .app-header{height:52px;flex:none;background:linear-gradient(90deg,#f2d7df,#f8e9e6);border-bottom:1px solid #cda79b;display:flex;align-items:center;justify-content:space-between;padding:4px 9px;color:#674638}
@@ -105,14 +105,22 @@ button{font:inherit;cursor:pointer}
 .diary-card img{width:100%;max-height:140px;object-fit:cover}
 .diary-card [contenteditable]{font-size:10px;line-height:1.5;min-height:22px;padding-top:5px;outline:none;color:#684638}
 .diary-card .delete-card{position:absolute;right:-7px;top:-8px;border:0;border-radius:50%;background:#b7778d;color:white;width:19px;height:19px}
-.diary-text-card{display:inline-block;width:92%;margin:8px 2%;padding:12px;background:#fffdf7;border:1px dashed #d1a6a0;box-shadow:1px 3px 6px #68463822;font-size:12px;min-height:45px;outline:none}
+.diary-text-card{display:inline-block;position:relative;width:92%;margin:8px 2%;padding:12px 30px 12px 12px;background:#fffdf7;border:1px dashed #d1a6a0;box-shadow:1px 3px 6px #68463822;font-size:12px;min-height:45px;outline:none}
 .diary-date{font:italic 16px "Cormorant Garamond",serif;color:#9a6d62;text-align:center;margin:3px 0 10px}
 .message-paper{background:#fffdf8;border:1px solid #d7b8a9;padding:18px 14px;line-height:1.9;font-size:12px;box-shadow:2px 3px 0 #ead8cf}
 .empty-character{text-align:center;padding:48px 8px;color:#8c6b5e}
 .empty-character .big{font:50px "Cormorant Garamond",serif;color:#d49aaa}
 .hardware{height:56px;display:flex;align-items:center;justify-content:space-around;padding:2px 25px 0}
 .hardware-button{width:34px;height:27px;border-radius:50%;border:1px solid #a87970;background:linear-gradient(#fce9e4,#d9aaa0);color:#77554d;box-shadow:inset 0 1px 2px #fff;font-size:19px}
-.hardware-home{width:60px;height:36px;border-radius:12px;border:1px solid #94675d;background:linear-gradient(145deg,#fff1e8,#c88f83);box-shadow:0 2px 3px #6d403b66,inset 0 1px 2px #fff;font-size:22px;display:grid;place-items:center}
-.phone-brand{text-align:center;font:9px Arial,sans-serif;letter-spacing:2px;color:#73554c;padding:4px 0 0}
+.hardware-home{width:60px;height:36px;border-radius:12px;border:1px solid #94675d;background:linear-gradient(145deg,#fff1e8 0%,#d8aaa0 48%,#f5d9d0 100%);box-shadow:0 2px 3px #6d403b66,inset 0 1px 2px #fff, inset 0 -2px 3px #9d6e65;display:grid;place-items:center}
+.metal-bow{width:25px;height:16px;position:relative;display:block;filter:drop-shadow(0 1px 1px #68463866)}
+.metal-bow:before,.metal-bow:after{content:"";position:absolute;top:2px;width:10px;height:10px;border:1px solid #8c555b;background:linear-gradient(135deg,#fff0ee 0%,#d99aa5 38%,#f8d9d8 62%,#a86c73 100%);box-shadow:inset 0 1px 1px #fff;border-radius:7px 7px 3px 7px}
+.metal-bow:before{left:1px;transform:rotate(25deg) skewY(8deg)}
+.metal-bow:after{right:1px;transform:rotate(-25deg) scaleX(-1) skewY(8deg)}
+.metal-bow{background:radial-gradient(ellipse at center,#f8e3dc 0 3px,#9c6268 3.5px 5px,transparent 5.5px)}
+.phone-brand{display:none}
 .phone-bottom-line{height:3px;width:42px;background:#916d65;border-radius:4px;margin:0 auto 2px}
 @media(max-width:430px){.stage{padding:10px 4px}.phone{width:96vw;padding:8px;border-radius:35px}.screen{height:690px;max-height:calc(100vh - 160px);min-height:560px}.app-art{width:52px;height:52px}.app-grid{gap:11px 4px}}
+
+.diary-text-content{min-height:45px;outline:none}
+.diary-text-card .delete-card{position:absolute;right:5px;top:5px;border:0;border-radius:50%;background:#b7778d;color:white;width:19px;height:19px;cursor:pointer}
