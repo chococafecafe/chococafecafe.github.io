@@ -1,66 +1,132 @@
-const $ = (selector) => document.querySelector(selector);
-const lockScreen = $("#lockScreen");
-const homeScreen = $("#homeScreen");
-const appScreen = $("#appScreen");
-const appContent = $("#appContent");
-const appTitle = $("#appTitle");
-const appKicker = $("#appKicker");
-
-const weekdays = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+const $ = (id) => document.getElementById(id);
+const state = { app: null, monthOffset: 0, tracks: [], trackIndex: 0, audioUrl: null, dessertItems: [] };
 
 function updateClock(){
   const now = new Date();
   const time = now.toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit",hour12:false});
-  const date = `${weekdays[now.getDay()]} · ${months[now.getMonth()]} ${now.getDate()}`;
-  $("#clock").textContent = time;
-  $("#lockTime").textContent = time;
-  $("#lockDate").textContent = date;
-  $("#homeDate").textContent = `${String(now.getMonth()+1).padStart(2,"0")}.${String(now.getDate()).padStart(2,"0")} ${weekdays[now.getDay()]}`;
+  const ampm = now.getHours() >= 12 ? "PM" : "AM";
+  const date = now.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"2-digit"}).toUpperCase();
+  $("statusTime").textContent = time;
+  $("lockClock").textContent = now.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:true});
+  $("lockDate").textContent = date;
+  $("heartTime").textContent = time;
+  $("heartAmPm").textContent = ampm;
+  $("homeDate").textContent = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,"0")}.${String(now.getDate()).padStart(2,"0")} ${now.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase()}`;
 }
-updateClock();
-setInterval(updateClock,1000);
+updateClock(); setInterval(updateClock,1000);
 
-function showScreen(screen){
-  [lockScreen,homeScreen,appScreen].forEach(el=>el.classList.remove("active"));
-  screen.classList.add("active");
+function showScreen(which){
+  $("lockScreen").classList.toggle("hidden",which!=="lock");
+  $("homeScreen").classList.toggle("hidden",which!=="home");
+  $("appScreen").classList.toggle("hidden",which!=="app");
 }
-$("#unlockButton").addEventListener("click",()=>showScreen(homeScreen));
+$("unlockButton").addEventListener("click",()=>{
+  $("lockState").textContent="Unlocked";
+  $("unlockButton").classList.add("unlocked");
+  setTimeout(()=>showScreen("home"),260);
+});
+$("hardwareHome").addEventListener("click",()=>{state.app=null;showScreen("home");});
+$("appBack").addEventListener("click",()=>{state.app=null;showScreen("home");});
+$("hardwareBack").addEventListener("click",()=>{if(state.app){state.app=null;showScreen("home");}else showScreen("lock");});
+$("hardwareMenu").addEventListener("click",()=>openApp("calendar"));
+$("appMenu").addEventListener("click",()=>openApp("calendar"));
+document.querySelectorAll("[data-app]").forEach(btn=>btn.addEventListener("click",()=>openApp(btn.dataset.app)));
 
-function makeCard(item){
-  const art = item.image
-    ? `<div class="content-art"><img src="${item.image}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover"></div>`
-    : `<div class="content-art">${item.emoji || "♡"}</div>`;
-  return `<article class="content-card">${art}<div class="mini-tag">${item.tag || "CHOCO PICK"}</div><h3>${item.name}</h3><p>${item.desc || ""}</p></article>`;
+const titles={dessert:"DESSERT MENU",anime:"ANIME COLLECTION",music:"MUSIC PLAYER",message:"MESSAGE BOX",diary:"MY DIARY",calendar:"CALENDAR",character:"CHARACTER"};
+function openApp(app){
+  state.app=app; showScreen("app");
+  $("appTitle").textContent=titles[app]||app.toUpperCase();
+  $("appEyebrow").textContent="CHOCO APPLICATION";
+  const renderers={dessert:renderDessert,anime:renderAnime,music:renderMusic,message:renderMessage,diary:renderDiary,calendar:renderCalendar,character:renderCharacter};
+  renderers[app]();
 }
-function renderApp(key){
-  const data = window.CHOCO_DATA[key];
-  if(!data) return;
-  appKicker.textContent = data.kicker || "CHOCO APPLICATION";
-  appTitle.textContent = data.title || key.toUpperCase();
-  let html = `<div class="menu-welcome"><div class="jp">${data.intro || "ようこそ！"}</div><p>${data.subtitle || ""}</p></div>`;
-  if(data.items){
-    html += `<div class="content-grid">${data.items.map(makeCard).join("")}</div>`;
-  }
-  if(data.entries){
-    html += data.entries.map(entry=>`<article class="text-entry"><small>${entry.date || ""}</small><h3>${entry.title}</h3><p>${entry.body}</p><p style="margin-top:7px;color:#b17d8d">${entry.translation || ""}</p></article>`).join("");
-  }
-  if(data.heading){
-    html += `<div class="profile-card"><div class="profile-heart">♡</div><h2>${data.heading}</h2><p>${data.body}</p></div>`;
-  }
-  html += `<button class="app-back-home" type="button">♡ 홈 화면으로 돌아가기</button>`;
-  appContent.innerHTML = html;
-  appContent.querySelector(".app-back-home").addEventListener("click",()=>showScreen(homeScreen));
-  showScreen(appScreen);
-  appContent.scrollTop=0;
+function safeText(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function fileToData(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);});}
+function saveLocal(key,value){try{localStorage.setItem(key,JSON.stringify(value));}catch(e){alert("저장 공간이 부족해요. 사진 크기를 줄여서 다시 시도해 주세요.");}}
+function loadLocal(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch(e){return fallback;}}
+
+function renderDessert(){
+  const items=loadLocal("chocoDesserts",[]);
+  $("appBody").innerHTML=`<div class="ribbon-title">Today's Dessert Menu ♡</div><p class="section-note">写真とメニューを自由に並べてね · 사진과 메뉴를 직접 추가해 봐!</p><div class="editor-toolbar"><button class="soft-btn dark" id="addDessert">＋ 사진과 메뉴 추가</button></div><div class="dessert-list" id="dessertList"></div><p class="section-note">♡ CHOCO CAFÉ · SWEET MENU ♡</p>`;
+  const list=$("dessertList");
+  items.forEach((it,i)=>{
+    const el=document.createElement("article");el.className="dessert-item";
+    el.innerHTML=`<img src="${it.image}" alt=""><div><input aria-label="메뉴 이름" placeholder="메뉴 이름" value="${safeText(it.name||"")}"><textarea aria-label="메뉴 설명" placeholder="맛과 특징을 적어줘">${safeText(it.desc||"")}</textarea><div class="dessert-price">♡ CHOCO SPECIAL ♡</div></div><button class="remove-item" title="삭제">×</button>`;
+    const [name,desc]=el.querySelectorAll("input,textarea");
+    const update=()=>{items[i].name=name.value;items[i].desc=desc.value;saveLocal("chocoDesserts",items);};
+    name.addEventListener("input",update);desc.addEventListener("input",update);
+    el.querySelector(".remove-item").addEventListener("click",()=>{items.splice(i,1);saveLocal("chocoDesserts",items);renderDessert();});
+    list.append(el);
+  });
+  $("addDessert").addEventListener("click",()=>$("dessertPhotoPicker").click());
 }
-document.querySelectorAll("[data-app]").forEach(button=>{
-  button.addEventListener("click",()=>renderApp(button.dataset.app));
+$("dessertPhotoPicker").addEventListener("change",async e=>{
+  const files=[...e.target.files];const items=loadLocal("chocoDesserts",[]);
+  for(const file of files){if(!file.type.startsWith("image/"))continue;items.push({image:await fileToData(file),name:"",desc:""});}
+  saveLocal("chocoDesserts",items);if(state.app==="dessert")renderDessert();e.target.value="";
 });
-$("#backButton").addEventListener("click",()=>showScreen(homeScreen));
-$("#hardwareBack").addEventListener("click",()=>{
-  if(appScreen.classList.contains("active")) showScreen(homeScreen);
-  else if(homeScreen.classList.contains("active")) showScreen(lockScreen);
+
+function renderMusic(){
+  $("appBody").innerHTML=`<div class="ribbon-title">My Little Music ♡</div><p class="section-note">お気に入りの音楽を入れてね · 나만의 MP3 플레이어</p><div class="music-player"><div class="mp3-screen"><div class="lcd-top"><span>CHOCO MP3</span><span>♫　PLAY</span></div><div class="mp3-track" id="trackName">NO MUSIC SELECTED</div><div class="mp3-artist" id="trackArtist">add your favorite songs ♡</div><div class="progress"><span id="progressFill"></span></div><div class="lcd-top"><span id="elapsed">00:00</span><span id="duration">00:00</span></div></div><div class="player-controls"><button id="prevTrack">◀</button><button id="playTrack">▶</button><button id="nextTrack">▶|</button></div><div class="editor-toolbar"><button class="soft-btn dark" id="addMusic">＋ MP3 음악 추가</button></div></div><ul class="track-list" id="trackList"></ul><p class="section-note">※ 선택한 음악은 이 브라우저에서 재생돼. 다른 기기에는 자동으로 공유되지 않아.</p><audio id="audioPlayer"></audio>`;
+  const audio=$("audioPlayer");
+  const draw=()=>{
+    $("trackList").innerHTML="";
+    state.tracks.forEach((track,i)=>{const li=document.createElement("li");if(i===state.trackIndex)li.classList.add("active");li.innerHTML=`<span>${String(i+1).padStart(2,"0")}</span><button>${safeText(track.name)}</button><span>♫</span>`;li.querySelector("button").addEventListener("click",()=>playIndex(i));$("trackList").append(li);});
+    const current=state.tracks[state.trackIndex];$("trackName").textContent=current?current.name:"NO MUSIC SELECTED";$("trackArtist").textContent=current?"CHOCO CAFÉ PLAYLIST":"add your favorite songs ♡";
+  };
+  function playIndex(i){if(!state.tracks.length)return;state.trackIndex=(i+state.tracks.length)%state.tracks.length;if(state.audioUrl)URL.revokeObjectURL(state.audioUrl);state.audioUrl=URL.createObjectURL(state.tracks[state.trackIndex].file);audio.src=state.audioUrl;audio.play().catch(()=>{});draw();$("playTrack").textContent="Ⅱ";}
+  $("playTrack").addEventListener("click",()=>{if(!state.tracks.length){$("audioPicker").click();return;}if(audio.paused){if(!audio.src)playIndex(state.trackIndex);else audio.play();$("playTrack").textContent="Ⅱ";}else{audio.pause();$("playTrack").textContent="▶";}});
+  $("prevTrack").addEventListener("click",()=>playIndex(state.trackIndex-1));
+  $("nextTrack").addEventListener("click",()=>playIndex(state.trackIndex+1));
+  $("addMusic").addEventListener("click",()=>$("audioPicker").click());
+  audio.addEventListener("timeupdate",()=>{const p=audio.duration?audio.currentTime/audio.duration*100:0;$("progressFill").style.width=p+"%";$("elapsed").textContent=fmt(audio.currentTime);$("duration").textContent=fmt(audio.duration);});
+  audio.addEventListener("ended",()=>playIndex(state.trackIndex+1));
+  function fmt(v){if(!Number.isFinite(v))return"00:00";return `${String(Math.floor(v/60)).padStart(2,"0")}:${String(Math.floor(v%60)).padStart(2,"0")}`;}
+  draw();
+}
+$("audioPicker").addEventListener("change",e=>{
+  [...e.target.files].forEach(file=>{if(file.type.startsWith("audio/")||/\.(mp3|m4a|wav|ogg)$/i.test(file.name))state.tracks.push({name:file.name.replace(/\.[^.]+$/,""),file});});
+  if(state.app==="music")renderMusic();e.target.value="";
 });
-$("#hardwareHome").addEventListener("click",()=>showScreen(homeScreen));
-$("#hardwareMenu").addEventListener("click",()=>showScreen(homeScreen));
+
+function renderCalendar(){
+  const base=new Date();base.setDate(1);base.setMonth(base.getMonth()+state.monthOffset);
+  const y=base.getFullYear(),m=base.getMonth(),today=new Date();
+  const monthName=base.toLocaleDateString("en-US",{month:"long",year:"numeric"});
+  let html=`<div class="ribbon-title">♡ My Sweet Calendar ♡</div><div class="calendar-wrap"><div class="calendar-top"><button id="prevMonth">‹</button><strong>${monthName}</strong><button id="nextMonth">›</button></div><div class="calendar-grid">`;
+  ["SUN","MON","TUE","WED","THU","FRI","SAT"].forEach((d,i)=>html+=`<span class="weekday ${i===0?"sun":i===6?"sat":""}">${d}</span>`);
+  const start=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
+  for(let i=0;i<start;i++)html+="<span></span>";
+  for(let d=1;d<=days;d++){const dow=new Date(y,m,d).getDay();const isToday=y===today.getFullYear()&&m===today.getMonth()&&d===today.getDate();html+=`<span class="${isToday?"today":""} ${dow===0?"sun":dow===6?"sat":""} ${dow===0||dow===6?"heart-day":""}">${d}</span>`;}
+  html+=`</div><div class="calendar-memo">♡ TODAY IS ${today.getFullYear()}.${String(today.getMonth()+1).padStart(2,"0")}.${String(today.getDate()).padStart(2,"0")} · ${today.toLocaleDateString("en-US",{weekday:"long"}).toUpperCase()} ♡<br>little things make lovely days.</div></div>`;
+  $("appBody").innerHTML=html;
+  $("prevMonth").addEventListener("click",()=>{state.monthOffset--;renderCalendar();});
+  $("nextMonth").addEventListener("click",()=>{state.monthOffset++;renderCalendar();});
+}
+function renderDiary(){
+  $("appBody").innerHTML=`<div class="ribbon-title">Dear Diary ♡</div><div class="diary-date">${new Date().toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric",weekday:"long"})}</div><p class="section-note">写真を貼って、言葉を書いて、今日のページを作ろう。</p><div class="editor-toolbar"><button class="soft-btn dark" id="addDiaryPhoto">＋ 사진 추가</button><button class="soft-btn" id="addDiaryText">＋ 글씨 추가</button><button class="soft-btn" id="saveDiary">♡ 저장</button></div><div class="diary-board" id="diaryBoard"></div><p class="section-note">사진 아래 글씨를 눌러 바로 수정할 수 있어. 카드를 끌어서 순서를 바꿔봐!</p>`;
+  const board=$("diaryBoard");const cards=loadLocal("chocoDiary",[]);
+  function addCard(card){const el=document.createElement("div");el.className=card.type==="text"?"diary-text-card":"diary-card";el.draggable=true;el.dataset.id=card.id;
+    if(card.type==="text"){el.contentEditable="true";el.textContent=card.text||"오늘의 기록을 적어줘 ♡";}
+    else el.innerHTML=`<button class="delete-card" title="삭제">×</button><img src="${card.image}" alt=""><div contenteditable="true">${safeText(card.caption||"a lovely memory ♡")}</div>`;
+    el.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",card.id);});
+    el.addEventListener("dragover",e=>e.preventDefault());
+    el.addEventListener("drop",e=>{e.preventDefault();const id=e.dataTransfer.getData("text/plain");const moving=[...board.children].find(x=>x.dataset.id===id);if(moving&&moving!==el)board.insertBefore(moving,el);});
+    const del=el.querySelector(".delete-card");if(del)del.addEventListener("click",()=>{el.remove();persist();});
+    board.append(el);
+  }
+  cards.forEach(addCard);
+  function persist(){const data=[...board.children].map(el=>el.classList.contains("diary-text-card")?{id:el.dataset.id,type:"text",text:el.innerText}:{id:el.dataset.id,type:"photo",image:el.querySelector("img").src,caption:el.querySelector("[contenteditable]").innerText});saveLocal("chocoDiary",data);}
+  $("addDiaryPhoto").addEventListener("click",()=>$("diaryPhotoPicker").click());
+  $("addDiaryText").addEventListener("click",()=>{addCard({id:"d"+Date.now(),type:"text",text:"오늘의 기록을 적어줘 ♡"});persist();});
+  $("saveDiary").addEventListener("click",()=>{persist();alert("오늘의 다이어리를 이 브라우저에 저장했어 ♡");});
+  board.addEventListener("input",persist);
+}
+$("diaryPhotoPicker").addEventListener("change",async e=>{
+  const board=$("diaryBoard");if(state.app!=="diary"||!board){e.target.value="";return;}
+  for(const file of [...e.target.files]){if(!file.type.startsWith("image/"))continue;const data=await fileToData(file);const id="d"+Date.now()+Math.random().toString(16).slice(2);const el=document.createElement("div");el.className="diary-card";el.draggable=true;el.dataset.id=id;el.innerHTML=`<button class="delete-card">×</button><img src="${data}" alt=""><div contenteditable="true">a lovely memory ♡</div>`;el.querySelector(".delete-card").addEventListener("click",()=>el.remove());board.append(el);}
+  $("saveDiary").click();e.target.value="";
+});
+function renderAnime(){$("appBody").innerHTML=`<div class="ribbon-title">My Anime Collection ♡</div><div class="message-paper">ここには、だいすきなアニメの思い出を集めていく予定です。<br><br>애니메이션 소개 공간은 다음 단계에서 다은이가 알려주는 작품과 사진으로 채울게. ♡</div>`;}
+function renderMessage(){$("appBody").innerHTML=`<div class="ribbon-title">Message for You ♡</div><div class="message-paper">チョコカフェにようこそ！<br><br>이곳은 다은이의 작은 취향과 기록을 모아둔 공간이야.<br><br>천천히 둘러보고 달콤한 추억 하나 가져가길 ♡<br><br><span style="font-family:'Cormorant Garamond',serif;font-style:italic">With love, Daeun</span></div>`;}
+function renderCharacter(){$("appBody").innerHTML=`<div class="empty-character"><div class="big">୨୧</div><div class="ribbon-title">Character Room</div><p>coming soon...</p><small>だいすきなキャラクターたちのために<br>このお部屋は、あとで飾ろうね ♡</small></div>`;}
