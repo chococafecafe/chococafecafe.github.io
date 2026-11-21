@@ -124,3 +124,64 @@ button{font:inherit;cursor:pointer}
 
 .diary-text-content{min-height:45px;outline:none}
 .diary-text-card .delete-card{position:absolute;right:5px;top:5px;border:0;border-radius:50%;background:#b7778d;color:white;width:19px;height:19px;cursor:pointer}
+
+/* Choco Cafe: exact handset reference image */
+.stage{min-height:100vh;justify-content:center;padding:18px 10px 28px;gap:8px}
+.outside-caption{display:none!important}
+.phone.phone-reference{
+  width:min(400px,94vw);
+  aspect-ratio:180 / 348;
+  height:auto;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  position:relative;
+  overflow:visible;
+}
+.phone-shell{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;z-index:1;pointer-events:none}
+.phone-reference .screen{
+  position:absolute;
+  left:13.35%;top:15.52%;
+  width:75.55%;height:62.07%;
+  min-height:0;max-height:none;
+  border:0;border-radius:2px;
+  overflow:hidden;
+  background:#fff8ef;
+  z-index:2;
+}
+.phone-reference .statusbar{height:23px}
+.phone-reference .lock-screen,
+.phone-reference .home-screen,
+.phone-reference .app-screen{height:calc(100% - 23px)}
+.phone-reference .lock-screen{background:linear-gradient(#fff3,#fff3),url("assets/floral-wallpaper.jpg") center/cover}
+.phone-reference .lock-date{font-size:14px}
+.phone-reference .lock-clock{font-size:30px}
+.phone-reference .lock-welcome{margin-top:38px}
+.phone-reference .home-screen{background:url("assets/floral-wallpaper.jpg") center/cover}
+.phone-reference .home-screen:before{background:linear-gradient(#fff6,#fff4)}
+.phone-reference .home-content{padding:10px 8px 12px}
+.phone-reference .home-date{font-size:12px}
+.phone-reference .heart-clock{width:145px;height:112px;margin:0 0 0}
+.phone-reference .heart-outline{font-size:130px}
+.phone-reference .heart-clock strong{font-size:22px}
+.phone-reference .home-greeting{font-size:12px;margin:0 0 8px}
+.phone-reference .app-grid{gap:10px 4px;margin-top:3px}
+.phone-reference .app-art{width:49px;height:49px;border-radius:11px;font-size:23px}
+.phone-reference .app-icon small{font-size:9px;text-transform:lowercase}
+.phone-reference .app-header{height:45px}
+.phone-reference .app-header strong{text-transform:lowercase}
+.phone-reference .hardware-hit{
+  position:absolute;z-index:4;bottom:5.0%;
+  height:5.5%;border:0;background:transparent;padding:0;
+  opacity:0;cursor:pointer;
+}
+.phone-reference .hardware-back-hit{left:16%;width:16%}
+.phone-reference .hardware-home-hit{left:44%;width:22%}
+.phone-reference .hardware-menu-hit{left:74%;width:17%}
+.phone-reference .phone-top,
+.phone-reference .screen-frame,
+.phone-reference .hardware,
+.phone-reference .phone-brand,
+.phone-reference .phone-bottom-line{display:none!important}
