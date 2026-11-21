@@ -4,66 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#e7b9c8">
-  <title>choco café | welcome</title>
+  <title>チョコカフェにようこそ♡ | CHOCO CAFÉ</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="stage">
     <div class="outside-sparkle">♡　✧　♡　✧　♡</div>
-    <section class="phone phone-reference" aria-label="초코카페 핑크 스마트폰">
-      <img class="phone-shell" src="assets/phone-shell.png" alt="">
-      <div class="screen">
-        <div class="statusbar">
-          <span>● choco</span>
-          <span class="status-icons">◖))) ▰ <b id="statusTime">--:--</b></span>
-        </div>
-
-        <section id="lockScreen" class="lock-screen">
-          <div class="lock-date" id="lockDate">MONDAY · 00 / 00</div>
-          <div class="lock-clock" id="lockClock">12:34</div>
-          <div class="lock-welcome">WELCOME TO</div>
-          <div class="lock-logo">Choco Café</div>
-          <button id="unlockButton" class="unlock-button" type="button">
-            <span class="lock-heart">♡</span>
-            <span id="lockState">Locked</span>
-            <small>touch the heart</small>
-          </button>
-          <div class="lock-bottom">chococafe time</div>
-        </section>
-
-        <section id="homeScreen" class="home-screen hidden">
-          <div class="home-content">
-            <div class="home-date" id="homeDate">2026.11.22 SUN</div>
-            <div class="heart-clock">
-              <span class="heart-outline">♡</span>
-              <div><strong id="heartTime">12:34</strong><small id="heartAmPm">PM</small></div>
-            </div>
-            <div class="home-greeting">hi this is chococafe</div>
-            <div class="app-grid">
-              <button class="app-icon" data-app="dessert"><span class="app-art dessert-art">🍓</span><small>dessert</small></button>
-              <button class="app-icon" data-app="anime"><span class="app-art anime-art">🎀</span><small>anime</small></button>
-              <button class="app-icon" data-app="music"><span class="app-art music-art">♫</span><small>music</small></button>
-              <button class="app-icon" data-app="message"><span class="app-art message-art">✉</span><small>message</small></button>
-              <button class="app-icon" data-app="diary"><span class="app-art diary-art">♡</span><small>diary</small></button>
-              <button class="app-icon" data-app="calendar"><span class="app-art calendar-art">▦</span><small>calendar</small></button>
-              <button class="app-icon" data-app="character"><span class="app-art character-art">୨୧</span><small>character</small></button>
-            </div>
-          </div>
-        </section>
-
-        <section id="appScreen" class="app-screen hidden">
-          <div class="app-header">
-            <button id="appBack" class="tiny-control" aria-label="뒤로">‹</button>
-            <div><small id="appEyebrow">choco application</small><strong id="appTitle">dessert menu</strong></div>
-            <button id="appMenu" class="tiny-control" aria-label="메뉴">≡</button>
-          </div>
-          <div id="appBody" class="app-body"></div>
-        </section>
+    <section class="phone" aria-label="초코카페 핑크 휴대폰">
+      <div class="phone-top">
+        <span class="camera-dot"></span><span class="speaker"></span><span class="heart-gem">♥</span>
       </div>
-      <button id="hardwareBack" class="hardware-hit hardware-back-hit" aria-label="이전"></button>
-      <button id="hardwareHome" class="hardware-hit hardware-home-hit" aria-label="홈으로"></button>
-      <button id="hardwareMenu" class="hardware-hit hardware-menu-hit" aria-label="메뉴"></button>
-    </section>
+      <div class="screen-frame">
+        <div class="screen">
+          <div class="statusbar">
+            <span>● CHOCO</span>
+            <span class="status-icons">◖))) ▰ <b id="statusTime">--:--</b></span>
+          </div>
+
+          <section id="lockScreen" class="lock-screen">
+            <div class="lock-date" id="lockDate">MONDAY · 00 / 00</div>
+            <div class="lock-clock" id="lockClock">12:34</div>
+            <div class="lock-welcome">WELCOME TO</div>
+            <div class="lock-logo">Choco Café</div>
+            <div class="lock-jp">チョコカフェにようこそ♡</div>
+            <button id="unlockButton" class="unlock-button" type="button">
+              <span class="lock-heart">♡</span>
+              <span id="lockState">Locked</span>
+              <small>touch the heart</small>
+            </button>
+            <div class="lock-bottom">♡　a tiny pink world full of lovely things　♡</div>
+          </section>
 
           <section id="homeScreen" class="home-screen hidden">
             <div class="home-wallpaper"></div>
@@ -73,7 +43,7 @@
                 <span class="heart-outline">♡</span>
                 <div><strong id="heartTime">12:34</strong><small id="heartAmPm">PM</small></div>
               </div>
-              <div class="home-greeting">hi this is chococafe</div>
+              <div class="home-greeting">Welcome to my little room ♡</div>
               <div class="app-grid">
                 <button class="app-icon" data-app="dessert"><span class="app-art dessert-art">🍓</span><small>Dessert</small></button>
                 <button class="app-icon" data-app="anime"><span class="app-art anime-art">🎀</span><small>Anime</small></button>
@@ -97,14 +67,15 @@
           </section>
         </div>
       </div>
+      <div class="phone-brand">CHOCO CAFÉ　·　DAEUN'S MOBILE</div>
       <div class="hardware">
         <button id="hardwareBack" class="hardware-button back-button" aria-label="이전">‹</button>
-        <button id="hardwareHome" class="hardware-home" aria-label="홈으로"><span class="metal-bow" aria-hidden="true"></span></button>
+        <button id="hardwareHome" class="hardware-home" aria-label="홈으로"><span>🎀</span></button>
         <button id="hardwareMenu" class="hardware-button menu-button" aria-label="메뉴">☰</button>
       </div>
       <div class="phone-bottom-line"></div>
     </section>
-    
+    <div class="outside-caption">CHOCOLATE, RIBBONS & SWEET MEMORIES ♡</div>
   </main>
   <input id="audioPicker" type="file" accept="audio/*,.mp3,.m4a,.wav" multiple hidden>
   <input id="diaryPhotoPicker" type="file" accept="image/*" multiple hidden>
