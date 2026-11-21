@@ -7,9 +7,9 @@ button{font:inherit;cursor:pointer}
 .page{width:100%;min-height:100vh;display:grid;place-items:center;padding:12px;overflow:hidden;}
 .phone-canvas{width:min(760px,96vw,calc((100vh - 18px)*.904));aspect-ratio:1193/1319;position:relative;isolation:isolate;}
 .phone-scene{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;z-index:0;user-select:none;pointer-events:none;}
-.display{position:absolute;left:25.9%;top:12.55%;width:46.2%;height:69.0%;overflow:hidden;z-index:2;background:var(--cream);color:var(--choco);}
+.display{position:absolute;left:25.7%;top:13.4%;width:46.35%;height:67.9%;overflow:hidden;z-index:2;background:var(--cream);color:var(--choco);}
 .status-bar{height:5.45%;min-height:18px;background:#ececed;border-bottom:1px solid #c8b9b5;display:flex;align-items:center;justify-content:space-between;padding:0 3.8%;font:clamp(9px,1.35vw,13px) Arial,sans-serif;color:#513a33;letter-spacing:.1px;}
-.carrier{white-space:nowrap}.status-right{display:flex;align-items:center;gap:clamp(4px,.8vw,9px);white-space:nowrap}.wifi{font-size:1em;letter-spacing:-2px}.battery{width:13px;height:7px;border:1px solid #684437;border-radius:1px;display:inline-block;position:relative}.battery:after{content:"";position:absolute;right:-3px;top:1px;width:2px;height:3px;background:#684437}.battery:before{content:"";position:absolute;inset:1px;background:#684437;width:72%}
+.carrier{white-space:nowrap}.status-right{display:flex;align-items:center;gap:clamp(4px,.8vw,9px);white-space:nowrap}.battery{width:13px;height:7px;border:1px solid #684437;border-radius:1px;display:inline-block;position:relative}.battery:after{content:"";position:absolute;right:-3px;top:1px;width:2px;height:3px;background:#684437}.battery:before{content:"";position:absolute;inset:1px;background:#684437;width:72%}
 .screen-page{position:absolute;inset:5.45% 0 0;background:#fff8ef url('assets/floral-wallpaper.jpg') center/cover no-repeat;overflow:hidden;text-align:center;}
 .screen-page:before{content:"";position:absolute;inset:0;background:rgba(255,250,244,.28);pointer-events:none;}
 .screen-page>*{position:relative;z-index:1}
@@ -43,3 +43,16 @@ button{font:inherit;cursor:pointer}
 .menu-hit{left:59.3%;top:89.5%;width:8.5%;height:5.2%;border-radius:50%;}
 .hardware-hit:focus-visible{outline:2px solid #a96379;outline-offset:2px;}
 @media(max-width:520px){.page{padding:0}.phone-canvas{width:min(100vw,calc(100vh*.904));}.display{left:25.9%;top:12.55%;width:46.2%;height:69.0%;}.lock-screen{padding-top:7%;}.welcome-kicker{margin-top:9%;}.app-grid{gap:3.7% 1%;}}
+
+/* App pages: kept inside the illustrated phone display */
+.app-screen{background-color:#fff8ef;background-image:linear-gradient(rgba(255,250,244,.24),rgba(255,250,244,.24)),url('assets/floral-wallpaper.jpg');background-position:center;background-size:cover;padding:0 5% 5%;}
+.app-topline{height:12%;min-height:34px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d9b7aa;color:var(--choco);font:italic 600 clamp(13px,2vw,19px) 'Cormorant Garamond',Georgia,serif;letter-spacing:.06em;}
+.app-back{border:1px solid #c99a91;background:linear-gradient(#fffaf7,#f0d6dc);color:#805447;border-radius:50%;width:28px;height:28px;font:24px Georgia;line-height:20px;box-shadow:0 2px 4px #70483b25;}
+.app-heart{font-size:20px;color:#a96379}
+.app-content{height:88%;overflow:auto;padding:7% 3% 4%;display:flex;align-items:center;flex-direction:column;text-align:center;}
+.app-ornament{color:#b77a87;letter-spacing:.18em;font:italic 14px 'Cormorant Garamond',Georgia,serif;}
+.app-content h2{margin:7% 0 2%;font:italic 600 clamp(24px,4vw,36px) 'Playfair Display',Georgia,serif;color:#a96879;}
+.app-content p{margin:0;color:#805b4c;font:italic 500 clamp(12px,1.8vw,16px) 'Cormorant Garamond',Georgia,serif;}
+.app-placeholder{margin:auto 0;width:86%;min-height:42%;border:1px solid #d8aaa6;border-radius:16px;background:rgba(255,250,246,.76);box-shadow:0 3px 10px #805b4c20,inset 0 0 0 4px #fff8f4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#916a5c;font:italic 500 14px 'Cormorant Garamond',Georgia,serif;}
+.placeholder-heart{font:42px Georgia;color:#bd7b91;}
+@media(max-width:520px){.display{left:25.7%;top:13.4%;width:46.35%;height:67.9%;}.app-topline{height:12%;}}

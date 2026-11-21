@@ -1,7 +1,18 @@
 const $ = (id) => document.getElementById(id);
 const lockScreen = $('lockScreen');
 const homeScreen = $('homeScreen');
-let unlocked = false;
+const appScreen = $('appScreen');
+let currentView = 'lock';
+
+const appInfo = {
+  dessert: {title:'dessert', heading:'sweet menu', description:'a little sweetness for today'},
+  anime: {title:'anime', heading:'anime room', description:'stories that stay in our hearts'},
+  music: {title:'music', heading:'music box', description:'songs for every little moment'},
+  message: {title:'message', heading:'little letters', description:'a place for lovely messages'},
+  diary: {title:'diary', heading:'my diary', description:'photos, notes, and everyday memories'},
+  calendar: {title:'calendar', heading:'calendar', description:'today is a page in your story'},
+  character: {title:'character', heading:'character room', description:'a tiny space for favorite friends'}
+};
 
 function updateClock(){
   const now = new Date();
@@ -17,27 +28,46 @@ function updateClock(){
   $('homeClock').textContent = time;
   $('homeAmPm').textContent = new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:true}).format(now).replace(/[0-9]/g,'').trim().toUpperCase();
 }
+
 function showLock(){
-  unlocked = false;
+  currentView = 'lock';
   lockScreen.hidden = false;
   homeScreen.hidden = true;
+  appScreen.hidden = true;
   $('unlockLabel').textContent = 'Locked';
 }
 function showHome(){
-  unlocked = true;
+  currentView = 'home';
   lockScreen.hidden = true;
   homeScreen.hidden = false;
+  appScreen.hidden = true;
 }
+function openApp(name){
+  const info = appInfo[name];
+  if(!info) return;
+  currentView = 'app';
+  lockScreen.hidden = true;
+  homeScreen.hidden = true;
+  appScreen.hidden = false;
+  $('appTitle').textContent = info.title;
+  $('appHeading').textContent = info.heading;
+  $('appDescription').textContent = info.description;
+  $('appPlaceholder').querySelector('span:last-child').textContent = 'coming soon';
+}
+function goBack(){
+  if(currentView === 'app') showHome();
+  else if(currentView === 'home') showLock();
+  else showHome();
+}
+
 $('unlockButton').addEventListener('click',showHome);
 $('homeButton').addEventListener('click',showHome);
-$('backButton').addEventListener('click',()=> unlocked ? showLock() : showHome());
-$('menuButton').addEventListener('click',()=> unlocked ? showLock() : showHome());
-// App contents are intentionally placeholders for the next design session.
+$('backButton').addEventListener('click',goBack);
+$('menuButton').addEventListener('click',goBack);
+$('appBack').addEventListener('click',showHome);
 document.querySelectorAll('.app-icon').forEach((button)=>{
-  button.addEventListener('click',()=>{
-    const name = button.dataset.app;
-    alert(`${name} app ♡\nLet's decorate this app tomorrow!`);
-  });
+  button.addEventListener('click',()=>openApp(button.dataset.app));
 });
+
 updateClock();
 setInterval(updateClock,1000);

@@ -10,7 +10,7 @@
 <body>
   <main class="page">
     <div class="phone-canvas" aria-label="Choco Café pink vintage touch phone">
-      <img class="phone-scene" src="https://chococafecafe.github.io/assets/phone-scene.png" alt="Pastel pink vintage phone with a bow-shaped home button">
+      <img class="phone-scene" src="assets/phone-scene.png" alt="Pastel pink vintage phone with a bow-shaped home button">
 
       <!-- The display is a real webpage layer: its clock and buttons remain interactive. -->
       <section class="display" aria-label="Phone screen">
@@ -49,6 +49,23 @@
             <button class="app-icon" type="button" data-app="character"><span class="app-tile character">୨୧</span><span>character</span></button>
           </div>
           <p class="home-footer">choco café</p>
+        </section>
+
+        <section id="appScreen" class="screen-page app-screen" hidden aria-live="polite">
+          <div class="app-topline">
+            <button id="appBack" class="app-back" type="button" aria-label="Back">‹</button>
+            <span id="appTitle">choco app</span>
+            <span class="app-heart">♡</span>
+          </div>
+          <div class="app-content">
+            <div class="app-ornament">✧　♡　✧</div>
+            <h2 id="appHeading">welcome</h2>
+            <p id="appDescription">a little corner of choco café</p>
+            <div class="app-placeholder" id="appPlaceholder">
+              <span class="placeholder-heart">♡</span>
+              <span>coming soon</span>
+            </div>
+          </div>
         </section>
       </section>
 
