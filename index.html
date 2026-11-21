@@ -1,114 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#e7b9c8">
-  <title>choco café | welcome</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5dce5">
+  <title>choco café ♡</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="stage">
-    <div class="outside-sparkle">♡　✧　♡　✧　♡</div>
-    <section class="phone phone-reference" aria-label="초코카페 핑크 스마트폰">
-      <img class="phone-shell" src="assets/phone-shell.png" alt="">
-      <div class="screen">
-        <div class="statusbar">
-          <span>● choco</span>
-          <span class="status-icons">◖))) ▰ <b id="statusTime">--:--</b></span>
-        </div>
+  <main class="page">
+    <div class="phone-canvas" aria-label="Choco Café pink vintage touch phone">
+      <img class="phone-scene" src="assets/phone-scene.png" alt="Pastel pink vintage phone with a bow-shaped home button">
 
-        <section id="lockScreen" class="lock-screen">
-          <div class="lock-date" id="lockDate">MONDAY · 00 / 00</div>
-          <div class="lock-clock" id="lockClock">12:34</div>
-          <div class="lock-welcome">WELCOME TO</div>
-          <div class="lock-logo">Choco Café</div>
-          <button id="unlockButton" class="unlock-button" type="button">
-            <span class="lock-heart">♡</span>
-            <span id="lockState">Locked</span>
+      <!-- The display is a real webpage layer: its clock and buttons remain interactive. -->
+      <section class="display" aria-label="Phone screen">
+        <header class="status-bar">
+          <span class="carrier">● choco</span>
+          <span class="status-right"><span class="wifi" aria-label="Wi-Fi">◖)))</span><span class="battery" aria-label="Battery"></span><time id="statusTime">00:00</time></span>
+        </header>
+
+        <section id="lockScreen" class="screen-page lock-screen">
+          <div class="lock-date" id="lockDate">SUNDAY, NOVEMBER 22</div>
+          <time class="lock-clock" id="lockClock">12:26 AM</time>
+          <div class="welcome-kicker">WELCOME TO</div>
+          <h1>Choco Café</h1>
+          <button class="unlock" id="unlockButton" type="button">
+            <span class="unlock-heart">♡</span>
+            <span id="unlockLabel">Locked</span>
             <small>touch the heart</small>
           </button>
-          <div class="lock-bottom">chococafe time</div>
+          <p class="lock-footer">♡　chococafe time　♡</p>
         </section>
 
-        <section id="homeScreen" class="home-screen hidden">
-          <div class="home-content">
-            <div class="home-date" id="homeDate">2026.11.22 SUN</div>
-            <div class="heart-clock">
-              <span class="heart-outline">♡</span>
-              <div><strong id="heartTime">12:34</strong><small id="heartAmPm">PM</small></div>
-            </div>
-            <div class="home-greeting">hi this is chococafe</div>
-            <div class="app-grid">
-              <button class="app-icon" data-app="dessert"><span class="app-art dessert-art">🍓</span><small>dessert</small></button>
-              <button class="app-icon" data-app="anime"><span class="app-art anime-art">🎀</span><small>anime</small></button>
-              <button class="app-icon" data-app="music"><span class="app-art music-art">♫</span><small>music</small></button>
-              <button class="app-icon" data-app="message"><span class="app-art message-art">✉</span><small>message</small></button>
-              <button class="app-icon" data-app="diary"><span class="app-art diary-art">♡</span><small>diary</small></button>
-              <button class="app-icon" data-app="calendar"><span class="app-art calendar-art">▦</span><small>calendar</small></button>
-              <button class="app-icon" data-app="character"><span class="app-art character-art">୨୧</span><small>character</small></button>
-            </div>
+        <section id="homeScreen" class="screen-page home-screen" hidden>
+          <div class="home-date" id="homeDate">2026.11.22 SUN</div>
+          <div class="heart-clock" aria-label="Current time">
+            <svg class="heart-svg" viewBox="0 0 220 190" aria-hidden="true"><path d="M110 174 C90 151 20 102 20 57 C20 9 81 -1 110 43 C139 -1 200 9 200 57 C200 102 130 151 110 174Z"/></svg>
+            <div class="heart-time"><strong id="homeClock">12:26</strong><small id="homeAmPm">AM</small></div>
           </div>
-        </section>
-
-        <section id="appScreen" class="app-screen hidden">
-          <div class="app-header">
-            <button id="appBack" class="tiny-control" aria-label="뒤로">‹</button>
-            <div><small id="appEyebrow">choco application</small><strong id="appTitle">dessert menu</strong></div>
-            <button id="appMenu" class="tiny-control" aria-label="메뉴">≡</button>
+          <p class="home-greeting">hi this is chococafe</p>
+          <div class="app-grid" aria-label="Apps">
+            <button class="app-icon" type="button" data-app="dessert"><span class="app-tile strawberry">🍓</span><span>dessert</span></button>
+            <button class="app-icon" type="button" data-app="anime"><span class="app-tile ribbon">🎀</span><span>anime</span></button>
+            <button class="app-icon" type="button" data-app="music"><span class="app-tile music">♫</span><span>music</span></button>
+            <button class="app-icon" type="button" data-app="message"><span class="app-tile message">✉</span><span>message</span></button>
+            <button class="app-icon" type="button" data-app="diary"><span class="app-tile diary">♡</span><span>diary</span></button>
+            <button class="app-icon" type="button" data-app="calendar"><span class="app-tile calendar">▦</span><span>calendar</span></button>
+            <button class="app-icon" type="button" data-app="character"><span class="app-tile character">୨୧</span><span>character</span></button>
           </div>
-          <div id="appBody" class="app-body"></div>
+          <p class="home-footer">choco café</p>
         </section>
-      </div>
-      <button id="hardwareBack" class="hardware-hit hardware-back-hit" aria-label="이전"></button>
-      <button id="hardwareHome" class="hardware-hit hardware-home-hit" aria-label="홈으로"></button>
-      <button id="hardwareMenu" class="hardware-hit hardware-menu-hit" aria-label="메뉴"></button>
-    </section>
+      </section>
 
-          <section id="homeScreen" class="home-screen hidden">
-            <div class="home-wallpaper"></div>
-            <div class="home-content">
-              <div class="home-date" id="homeDate">2026.11.22 SUN</div>
-              <div class="heart-clock">
-                <span class="heart-outline">♡</span>
-                <div><strong id="heartTime">12:34</strong><small id="heartAmPm">PM</small></div>
-              </div>
-              <div class="home-greeting">hi this is chococafe</div>
-              <div class="app-grid">
-                <button class="app-icon" data-app="dessert"><span class="app-art dessert-art">🍓</span><small>Dessert</small></button>
-                <button class="app-icon" data-app="anime"><span class="app-art anime-art">🎀</span><small>Anime</small></button>
-                <button class="app-icon" data-app="music"><span class="app-art music-art">♫</span><small>Music</small></button>
-                <button class="app-icon" data-app="message"><span class="app-art message-art">✉</span><small>Message</small></button>
-                <button class="app-icon" data-app="diary"><span class="app-art diary-art">♡</span><small>Diary</small></button>
-                <button class="app-icon" data-app="calendar"><span class="app-art calendar-art">📅</span><small>Calendar</small></button>
-                <button class="app-icon" data-app="character"><span class="app-art character-art">୨୧</span><small>Character</small></button>
-              </div>
-              <div class="home-note">my sweet memories & little treasures ✧</div>
-            </div>
-          </section>
-
-          <section id="appScreen" class="app-screen hidden">
-            <div class="app-header">
-              <button id="appBack" class="tiny-control" aria-label="뒤로">‹</button>
-              <div><small id="appEyebrow">CHOCO APPLICATION</small><strong id="appTitle">DESSERT MENU</strong></div>
-              <button id="appMenu" class="tiny-control" aria-label="메뉴">≡</button>
-            </div>
-            <div id="appBody" class="app-body"></div>
-          </section>
-        </div>
-      </div>
-      <div class="hardware">
-        <button id="hardwareBack" class="hardware-button back-button" aria-label="이전">‹</button>
-        <button id="hardwareHome" class="hardware-home" aria-label="홈으로"><span class="metal-bow" aria-hidden="true"></span></button>
-        <button id="hardwareMenu" class="hardware-button menu-button" aria-label="메뉴">☰</button>
-      </div>
-      <div class="phone-bottom-line"></div>
-    </section>
-    
+      <!-- Invisible hit areas sit over the physical buttons in the illustration. -->
+      <button class="hardware-hit back-hit" id="backButton" type="button" aria-label="Back"></button>
+      <button class="hardware-hit home-hit" id="homeButton" type="button" aria-label="Home"></button>
+      <button class="hardware-hit menu-hit" id="menuButton" type="button" aria-label="Menu"></button>
+    </div>
   </main>
-  <input id="audioPicker" type="file" accept="audio/*,.mp3,.m4a,.wav" multiple hidden>
-  <input id="diaryPhotoPicker" type="file" accept="image/*" multiple hidden>
-  <input id="dessertPhotoPicker" type="file" accept="image/*" multiple hidden>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,41 +1,15 @@
-# CHOCO CAFÉ v3
+# choco café ♡ — phone redesign
 
-GitHub Pages용 정적 홈페이지입니다.
+This version rebuilds the landing experience around the new high-resolution pink vintage phone visual.
 
-## 업로드
-수정본의 `index.html`, `style.css`, `script.js`를 저장소 최상위(root)에 업로드하고 기존 파일을 덮어쓴 뒤 Commit changes를 누르세요. 기존 `assets/` 폴더는 그대로 두면 됩니다.
+## Files
+- `index.html` — interactive lock screen and home screen
+- `style.css` — responsive phone-screen layout and typography
+- `script.js` — live clock, date, unlock, and physical-button hit areas
+- `assets/phone-scene.png` — new phone visual reference/background
+- `assets/floral-wallpaper.jpg` — floral screen wallpaper
 
-## 이번 버전
-- 데코폰 형태의 잠금 화면 / 홈 화면
-- 실제 시각과 날짜 표시
-- 하드웨어 이전 / 리본 홈 / 메뉴 버튼
-- MP3 파일 여러 개 선택 및 브라우저 내 재생
-- 현재 날짜에 맞춰 바뀌는 달력
-- 사진과 글을 추가하는 다이어리
-- 사진과 설명을 직접 추가하는 디저트 메뉴
-- 캐릭터 앱은 비워둔 상태
-- 잠금화면 문구와 시계 크기 조정, 홈 화면 배경 통일
-- 하단 홈 버튼의 리본을 메탈 장식으로 변경
-- 다이어리에서 사진 카드와 글 카드 모두 개별 삭제 가능
+## GitHub upload
+Upload/replace `index.html`, `style.css`, and `script.js` at the repository root. Upload the two image files into the existing `assets` folder (create it if needed). Keep the exact filenames and folder structure.
 
-## 사용자 데이터 안내
-음악 파일은 사용자가 선택한 브라우저에서 재생됩니다. 음악 파일 자체를 GitHub에 업로드하거나 다른 방문자에게 공유하지 않습니다.
-다이어리와 디저트 메뉴는 해당 브라우저의 localStorage에 저장됩니다. 브라우저 데이터 삭제 시 저장 내용이 사라질 수 있습니다. 다른 기기와 자동 동기화되지 않습니다.
-
-## 이미지 교체
-`assets/` 폴더 안의 이미지를 교체하거나, HTML/CSS의 `assets/...` 경로를 수정하면 됩니다.
-
-
-## v2 업데이트
-
-- 실제 핑크 휴대폰 참고 이미지로 본체 프레임 교체
-- 화면은 투명 영역에 HTML로 올려 잠금/홈/앱이 실제로 작동하도록 구성
-- 본체 사진에 있는 뒤로가기·리본 홈·메뉴 버튼 위치에 클릭 영역 배치
-- 홈 화면 배경을 잠금화면과 같은 꽃무늬로 통일
-- 화면 바깥 문구와 홈 화면 하단 문구 제거
-- 앱 내 일본어와 개인 이름 표기 제거
-
-업로드할 때:
-1. 저장소 최상위의 `index.html`, `style.css`, `script.js`를 교체하세요.
-2. 새 파일 `assets/phone-shell.png`를 기존 `assets` 폴더 안에 추가하세요.
-3. 기존 `assets` 폴더의 다른 이미지들은 삭제하지 마세요.
+The app buttons are temporary placeholders; their individual pages will be designed separately.
