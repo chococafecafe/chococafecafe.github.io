@@ -1,26 +1,38 @@
-# 초코카페 홈페이지 🍫
+# CHOCO CAFÉ MOBILE ♡
 
-다은이의 취향과 기록을 담은 개인 홈페이지입니다. HTML, CSS, JavaScript만 사용해서 GitHub Pages에 바로 올릴 수 있어요.
+다은이의 초코카페를 2000년대 일본 핑크 터치폰처럼 만든 GitHub Pages용 홈페이지입니다.
 
 ## 파일 구성
-- `index.html` : 홈페이지 내용
-- `style.css` : 디자인과 모바일 반응형 스타일
-- `script.js` : 모바일 메뉴 동작
+- `index.html` : 휴대폰 외형, 잠금 화면, 홈 화면, 앱 화면
+- `style.css` : 핑크+연초코 색상과 휴대폰 디자인
+- `data.js` : **메뉴 이름, 설명, 소개글, 일기 등 콘텐츠를 수정하는 곳**
+- `script.js` : 현재 시각, 잠금 해제, 앱 열기/홈 이동 기능
+- `images/` : 직접 넣을 이미지 폴더
 
-## GitHub Pages에 공개하기
-1. GitHub에서 새 저장소(repository)를 만듭니다.
-2. 저장소 이름은 개인 홈페이지 주소를 `아이디.github.io` 형태로 만들고 싶다면 반드시 `본인GitHub아이디.github.io`로 지정합니다.
-3. 이 폴더 안의 파일 4개를 저장소 최상위(root)에 업로드하고 커밋합니다.
-4. 저장소의 **Settings → Pages**로 이동합니다.
-5. **Build and deployment → Source**에서 `Deploy from a branch`를 선택합니다.
-6. Branch는 `main`, 폴더는 `/(root)`로 설정하고 **Save**를 누릅니다.
-7. 잠시 기다린 뒤 `https://본인GitHub아이디.github.io`에서 확인합니다.
+## GitHub에 업데이트하기
+1. 이 ZIP 파일을 압축 해제합니다.
+2. GitHub 저장소 `chococafecafe.github.io`에 들어갑니다.
+3. `Add file → Upload files`를 누릅니다.
+4. 압축을 푼 폴더 안의 `index.html`, `style.css`, `data.js`, `script.js`, `README.md`를 업로드합니다.
+5. 기존 파일과 이름이 같으면 새 파일로 덮어써집니다. `images` 폴더는 필요한 사진을 넣은 뒤 폴더 안 파일을 업로드합니다.
+6. `Commit changes`를 누릅니다. 잠시 후 사이트를 새로고침합니다.
 
-GitHub Free에서는 공개 저장소를 이용하면 GitHub Pages를 사용할 수 있습니다. 사이트는 인터넷에 공개되므로 주소, 연락처, 비밀번호 등 공개하고 싶지 않은 개인정보는 올리지 마세요.
+## 내용 수정하기 (가장 쉬운 방법)
+GitHub에서 `data.js` 파일을 클릭하고 연필 모양(Edit) 버튼을 눌러 수정하면 됩니다. 수정 후 `Commit changes`를 누르면 반영됩니다.
 
-## 내 취향으로 수정하기
-- 글을 바꾸려면 `index.html`을 수정합니다.
-- 색상은 `style.css` 맨 위 `:root`의 색상 코드를 바꾸면 전체 분위기를 조절할 수 있습니다.
-- 사진을 넣고 싶다면 저장소에 `images` 폴더를 만든 뒤 이미지 파일을 올리고 HTML에서 `<img src="images/파일이름.jpg" alt="설명">` 형태로 연결하면 됩니다.
+예를 들어 캐릭터 메뉴는 `data.js` 안의 `character` 항목입니다.
+- `name`: 카드 제목
+- `desc`: 카드 설명
+- `emoji`: 임시 그림 이모지
+- `tag`: 작은 분류 라벨
+- `image`: 사진 경로(선택)
 
-처음부터 모든 내용을 채울 필요는 없어요. 일기와 음악 목록은 마음에 드는 문장과 곡이 생길 때마다 조금씩 추가해 주세요. ♡
+사진을 넣는 방법:
+1. 저장소에 `images` 폴더를 만들고 사진을 업로드합니다.
+2. `data.js`에서 해당 카드에 `image: "images/사진이름.jpg"`를 추가합니다.
+3. `emoji`는 이미지가 없을 때 보여줄 임시 그림입니다.
+
+## 주의
+- 사이트는 공개되어 있으므로 개인정보는 올리지 마세요.
+- 이 버전은 프런트엔드만으로 동작합니다. 실제 방명록 저장 기능은 별도 백엔드나 외부 서비스를 연결해야 합니다.
+- 휴대폰 시계는 방문자의 기기 시간을 표시합니다.
