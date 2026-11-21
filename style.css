@@ -2,12 +2,12 @@
 :root{--choco:#684437;--rose:#a96379;--soft-rose:#d58da4;--cream:#fff9f1;}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;}
-body{min-height:100vh;background:#f6e2e9;display:grid;place-items:center;color:var(--choco);}
+body{min-height:100vh;background:#f6e2e9 url('assets/quilt-background.jpg') center center / 520px 520px repeat;display:grid;place-items:center;color:var(--choco);}
 button{font:inherit;cursor:pointer}
 .page{width:100%;min-height:100vh;display:grid;place-items:center;padding:12px;overflow:hidden;}
 .phone-canvas{width:min(760px,96vw,calc((100vh - 18px)*.904));aspect-ratio:1193/1319;position:relative;isolation:isolate;}
 .phone-scene{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;z-index:0;user-select:none;pointer-events:none;}
-.display{position:absolute;left:25.7%;top:13.4%;width:46.35%;height:67.9%;overflow:hidden;z-index:2;background:var(--cream);color:var(--choco);}
+.display{position:absolute;left:25.7%;top:13.4%;width:46.35%;height:67.9%;overflow:hidden;z-index:2;background:var(--cream);color:var(--choco);container-type:inline-size;}
 .status-bar{height:5.45%;min-height:18px;background:#ececed;border-bottom:1px solid #c8b9b5;display:flex;align-items:center;justify-content:space-between;padding:0 3.8%;font:clamp(9px,1.35vw,13px) Arial,sans-serif;color:#513a33;letter-spacing:.1px;}
 .carrier{white-space:nowrap}.status-right{display:flex;align-items:center;gap:clamp(4px,.8vw,9px);white-space:nowrap}.battery{width:13px;height:7px;border:1px solid #684437;border-radius:1px;display:inline-block;position:relative}.battery:after{content:"";position:absolute;right:-3px;top:1px;width:2px;height:3px;background:#684437}.battery:before{content:"";position:absolute;inset:1px;background:#684437;width:72%}
 .screen-page{position:absolute;inset:5.45% 0 0;background:#fff8ef url('assets/floral-wallpaper.jpg') center/cover no-repeat;overflow:hidden;text-align:center;}
@@ -17,7 +17,7 @@ button{font:inherit;cursor:pointer}
 .lock-date{font:italic 600 clamp(10px,1.9vw,18px) 'Cormorant Garamond',Georgia,serif;letter-spacing:.12em;color:#805b49;text-transform:uppercase;}
 .lock-clock{font:italic 600 clamp(23px,4.6vw,42px) 'Cormorant Garamond',Georgia,serif;color:#79513f;margin-top:1.4%;line-height:1.15;}
 .welcome-kicker{font:500 clamp(8px,1.4vw,13px) 'Cormorant Garamond',Georgia,serif;letter-spacing:.28em;margin-top:10%;color:#805541;}
-.lock-screen h1{font:italic 600 clamp(32px,6.8vw,62px) 'Playfair Display',Georgia,serif;color:#a96879;text-shadow:1px 2px 0 #fff,0 3px 5px #754d4733;margin:1.2% 0 0;line-height:1.08;white-space:nowrap;}
+.lock-screen h1{font:italic 600 clamp(25px,13cqw,46px) 'Playfair Display',Georgia,serif;color:#a96879;text-shadow:1px 2px 0 #fff,0 3px 5px #754d4733;margin:1.2% 0 0;line-height:1.08;white-space:nowrap;}
 .unlock{margin-top:auto;margin-bottom:10%;width:76%;min-height:clamp(40px,6.7vw,66px);border:1px solid #c58f91;border-radius:999px;background:linear-gradient(180deg,#fffaf8,#f4dce3);box-shadow:0 3px 8px #77504435,inset 0 1px 0 #fff;display:flex;align-items:center;justify-content:center;gap:3.5%;color:#744d43;font:italic 600 clamp(14px,2.6vw,24px) 'Cormorant Garamond',Georgia,serif;}
 .unlock-heart{font:clamp(22px,3.8vw,35px) Georgia,serif;color:#b86c85;line-height:1}.unlock small{font:italic clamp(7px,1.2vw,11px) 'Cormorant Garamond',Georgia,serif;}
 .lock-footer{margin:0;font:italic 500 clamp(8px,1.4vw,13px) 'Cormorant Garamond',Georgia,serif;letter-spacing:.1em;color:#805b4c;}
