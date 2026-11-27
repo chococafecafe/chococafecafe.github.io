@@ -1129,3 +1129,62 @@ button {
   background: rgba(255, 246, 244, 0.97);
 }
 
+/* =================================
+   calendar printed on vintage paper
+================================= */
+
+/* the entire calendar is printed on the paper */
+.calendar-open .calendar-app {
+  background:
+    linear-gradient(
+      rgba(255, 248, 246, 0.16),
+      rgba(255, 248, 246, 0.16)
+    ),
+    url('assets/calendar-paper.png') center top / 100% 100% no-repeat;
+}
+
+/* month title: soft translucent pink */
+.calendar-open .calendar-month-header {
+  background: rgba(244, 205, 216, 0.76);
+}
+
+/* weekday strip */
+.calendar-open .calendar-weekdays {
+  background: rgba(128, 99, 94, 0.86);
+}
+
+/* calendar grid itself */
+.calendar-open .calendar-grid {
+  background: transparent;
+}
+
+/* date cells: paper image remains visible underneath */
+.calendar-open .calendar-day {
+  background: rgba(255, 252, 247, 0.38);
+  border-color: rgba(190, 145, 139, 0.55);
+  color: #684437;
+}
+
+/* sunday */
+.calendar-open .calendar-day.sunday {
+  background: rgba(255, 239, 240, 0.42);
+  color: #bd8290;
+}
+
+/* empty dates */
+.calendar-open .calendar-day.empty-day {
+  background: rgba(255, 248, 244, 0.30);
+}
+
+/* today */
+.calendar-open .calendar-day.today {
+  background: rgba(248, 222, 229, 0.68);
+  box-shadow: inset 0 0 0 2px #d99bac;
+}
+
+/* selected date */
+.calendar-open .calendar-day.selected {
+  background: rgba(255, 239, 243, 0.76);
+  box-shadow: inset 0 0 0 2px #b9788b;
+}
+
