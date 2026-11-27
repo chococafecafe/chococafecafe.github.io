@@ -21,16 +21,16 @@ const STORAGE = {
 // Add your own transparent PNG sticker files in assets/stickers/.
  // The filenames below are intentionally fixed so the calendar can find them.
 const STICKER_CATALOG = [
-  { file: 'hello-kitty-chocolate.png', name: 'chocolate hello kitty' },
-  { file: 'sylvanian-rabbit.png', name: 'sylvanian rabbit' },
-  { file: 'kiki-lala-latte.png', name: 'kiki and lala latte' },
-  { file: 'pink-bow-cupcake.png', name: 'pink bow cupcake' },
-  { file: 'strawberry-shortcake.png', name: 'strawberry shortcake' },
-  { file: 'chocolate-strawberry-cake.png', name: 'chocolate strawberry cake' },
-  { file: 'sylvanian-kitten.png', name: 'sylvanian kitten' },
-  { file: 'pink-chocolate-truffle.png', name: 'pink chocolate truffle' },
-  { file: 'pink-whipped-cream.png', name: 'pink whipped cream' },
-  { file: 'pink-macaron.png', name: 'pink macaron' }
+  { file: 'chocolate_kitty.png', name: 'chocolate kitty' },
+  { file: 'silvanian_bunny.png', name: 'silvanian bunny' },
+  { file: 'pink_character_latte.png', name: 'pink character latte' },
+  { file: 'pink_bow_cupcake.png', name: 'pink bow cupcake' },
+  { file: 'strawberry_shortcake.png', name: 'strawberry shortcake' },
+  { file: 'chocolate_strawberry_cake.png', name: 'chocolate strawberry cake' },
+  { file: 'silvanian_cat.png', name: 'silvanian cat' },
+  { file: 'pink_drizzle_chocolate.png', name: 'pink drizzle chocolate' },
+  { file: 'pink_whipped_cream.png', name: 'pink whipped cream' },
+  { file: 'pink_macarons.png', name: 'pink macarons' }
 ];
 
 const appInfo = {
