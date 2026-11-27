@@ -984,3 +984,59 @@ button {
   }
 }
 
+/* calendar full-screen layout */
+
+.app-screen.calendar-open {
+  padding: 0;
+  background: #fff9f3;
+}
+
+.calendar-open .app-topline {
+  display: none;
+}
+
+.calendar-open .app-content {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: block;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.calendar-open .app-content > .app-ornament,
+.calendar-open .app-content > h2,
+.calendar-open .app-content > p {
+  display: none;
+}
+
+.calendar-open #appPlaceholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: left;
+}
+
+.calendar-open .calendar-app {
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  padding: 3% 3% 5%;
+  overflow-y: auto;
+}
+
+.calendar-open .calendar-month-header {
+  min-height: 48px;
+}
+
+.calendar-open .calendar-day {
+  min-height: clamp(48px, 9vw, 72px);
+}
+
