@@ -157,6 +157,7 @@ function openApp(name) {
   lockScreen.hidden = true;
   homeScreen.hidden = true;
   appScreen.hidden = false;
+  appScreen.classList.toggle('calendar-open', name === 'calendar');
 
   $('appTitle').textContent = info.title;
   $('appHeading').textContent = info.heading;
