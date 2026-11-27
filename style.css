@@ -485,3 +485,13 @@ button {
     height: 12%;
   }
 }
+
+/* choco cafe display alignment correction */
+.display {
+  left: 26%;
+  top: 13.6%;
+  width: 45.8%;
+  height: 67.4%;
+  border-radius: 0;
+}
+
