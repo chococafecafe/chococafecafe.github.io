@@ -173,6 +173,7 @@ function openApp(name) {
   homeScreen.hidden = true;
   appScreen.hidden = false;
   appScreen.classList.toggle('calendar-open', name === 'calendar');
+  appScreen.classList.toggle('diary-open', name === 'diary');
 
   $('appTitle').textContent = info.title;
   $('appHeading').textContent = info.heading;
@@ -194,17 +195,250 @@ function openApp(name) {
   `;
 }
 
+const DIARY_TEMPLATES = [
+  ...[
+    ['cute-01', 'mamegoma strawberry', 'image(20261127-115232).png'],
+    ['cute-02', 'sugarbunnies pink', 'image(20261127-115252).png'],
+    ['cute-03', 'jewelpet hearts', 'image(20261127-115305).png'],
+    ['cute-04', 'pink heart frame', 'image(20261127-115321).png'],
+    ['cute-05', 'fairytale friends', 'image(20261127-115333).png'],
+    ['cute-06', 'rose kitty frame', 'image(20261127-115927).png']
+  ].map(([id, name, file]) => ({ id, name, category: 'cute', image: `assets/diary-pages/${file}`, note: 'cute character stationery' })),
+  ...[
+    ['vintage-01', 'antique floral frame', 'image(20261127-115411).png'],
+    ['vintage-02', 'rose corner paper', 'image(20261127-115427).png'],
+    ['vintage-03', 'classic parchment', 'image(20261127-115515).png'],
+    ['vintage-04', 'rose garden', 'image(20261127-115527).png'],
+    ['vintage-05', 'pink rose lace', 'image(20261127-115536).png']
+  ].map(([id, name, file]) => ({ id, name, category: 'vintage', image: `assets/diary-pages/${file}`, note: 'vintage paper stationery' })),
+  { id: 'free', name: 'my own photo', category: 'free', note: 'use a photo from your device', symbol: '＋' }
+];
+
+let diaryCategory = 'cute';
+
+function getDiaryEntries() {
+  const entries = readStorage(STORAGE.diary, []);
+  return Array.isArray(entries) ? entries : [];
+}
+
 function renderDiaryPlaceholder() {
-  const dateText = selectedCalendarDate
-    ? formatLongDate(parseDate(selectedCalendarDate))
-    : 'choose a date to begin';
+  const dateKey = selectedCalendarDate || localDateKey(new Date());
+  const entries = getDiaryEntries().sort((a, b) => b.date.localeCompare(a.date));
+  const dateText = formatLongDate(parseDate(dateKey));
+  const templates = DIARY_TEMPLATES.filter(template => template.category === diaryCategory);
 
   $('appPlaceholder').innerHTML = `
-    <span class="placeholder-heart">♡</span>
-    <strong>my diary</strong>
-    <span>${escapeHTML(dateText)}</span>
-    <span>diary editor coming soon</span>
+    <div class="diary-app">
+      <div class="diary-welcome">
+        <span class="diary-kicker">a little book of memories</span>
+        <h3>my diary ♡</h3>
+        <p>keep your little moments here</p>
+      </div>
+      <label class="diary-date-label" for="diaryDate">diary date</label>
+      <input class="diary-date-input" id="diaryDate" type="date" value="${dateKey}">
+      <div class="diary-section-title"><span>choose your page</span><small>${escapeHTML(dateText)}</small></div>
+      <div class="diary-category-tabs">
+        <button type="button" data-category="cute" class="${diaryCategory === 'cute' ? 'active' : ''}">cute paper</button>
+        <button type="button" data-category="vintage" class="${diaryCategory === 'vintage' ? 'active' : ''}">vintage paper</button>
+        <button type="button" data-category="free" class="${diaryCategory === 'free' ? 'active' : ''}">free</button>
+      </div>
+      <div class="diary-template-grid ${diaryCategory === 'free' ? 'free-grid' : ''}">
+        ${templates.map(template => `
+          <button type="button" class="diary-template-card ${template.category}" data-template="${template.id}">
+            ${template.image
+              ? `<span class="diary-template-image"><img src="${template.image}" alt="${escapeHTML(template.name)}" loading="lazy"></span>`
+              : `<span class="diary-template-preview free-preview"><i>＋</i><b>my photo</b><em>bring your own page</em></span>`}
+            <strong>${escapeHTML(template.name)}</strong>
+            <small>${escapeHTML(template.note)}</small>
+          </button>
+        `).join('')}
+      </div>
+      <div class="diary-entry-section">
+        <div class="diary-section-title"><span>my pages</span><small>${entries.length} saved</small></div>
+        ${entries.length ? `<div class="diary-entry-list">${entries.map(entry => `
+          <button type="button" class="diary-entry-row" data-entry-date="${escapeHTML(entry.date)}">
+            <span class="diary-entry-date">${escapeHTML(entry.date)}</span>
+            <strong>${escapeHTML(entry.title || 'untitled page')}</strong>
+            <small>${escapeHTML(DIARY_TEMPLATES.find(t => t.id === entry.template)?.name || entry.template || 'diary page')}</small>
+            <b>›</b>
+          </button>
+        `).join('')}</div>` : '<p class="diary-empty">your story starts with one little page ♡</p>'}
+      </div>
+    </div>
   `;
+
+  $('diaryDate').addEventListener('change', event => {
+    selectedCalendarDate = event.target.value || localDateKey(new Date());
+  });
+  $('appPlaceholder').querySelectorAll('[data-category]').forEach(button => {
+    button.addEventListener('click', () => {
+      diaryCategory = button.dataset.category;
+      renderDiaryPlaceholder();
+    });
+  });
+  $('appPlaceholder').querySelectorAll('[data-template]').forEach(button => {
+    button.addEventListener('click', () => {
+      const chosenDate = $('diaryDate').value || localDateKey(new Date());
+      openDiaryEditor(chosenDate, button.dataset.template);
+    });
+  });
+  $('appPlaceholder').querySelectorAll('[data-entry-date]').forEach(button => {
+    button.addEventListener('click', () => openDiaryEditor(button.dataset.entryDate));
+  });
+}
+
+function openDiaryEditor(dateKey, templateId = null) {
+  const existing = getDiaryEntries().find(entry => entry.date === dateKey);
+  const template = templateId || existing?.template || 'vintage-01';
+  const templateInfo = DIARY_TEMPLATES.find(item => item.id === template);
+  const category = templateInfo?.category || (template === 'deco' ? 'cute' : template === 'free' ? 'free' : 'vintage');
+  const data = existing || { title: '', content: '' };
+  const pageImage = existing?.pageImage || templateInfo?.image || '';
+  let uploadedPageImage = existing?.pageImage || '';
+  let diaryPhotos = Array.isArray(existing?.photos) ? existing.photos : [];
+
+  $('appPlaceholder').innerHTML = `
+    <div class="diary-editor ${category}">
+      <div class="diary-editor-top">
+        <button type="button" id="diaryBackToPages">‹ pages</button>
+        <span>${escapeHTML(formatLongDate(parseDate(dateKey)))}</span>
+      </div>
+      <div class="diary-paper" id="diaryPaper" ${pageImage ? `style="--diary-page-image: url('${pageImage}')"` : ''}>
+        <div class="diary-paper-heading">${category === 'cute' ? '♡ my lovely day ♡' : category === 'free' ? '♡ little memories ♡' : 'dear diary,'}</div>
+        ${category === 'free' ? '<label class="diary-photo-upload">＋ choose your background photo<input type="file" id="diaryPagePhoto" accept="image/*"></label>' : ''}
+        <div class="diary-photo-toolbar">
+          <label class="diary-add-photo">＋ add photos<input type="file" id="diaryExtraPhotos" accept="image/*" multiple></label>
+          <small>tap a photo to select · drag to move</small>
+        </div>
+        <div class="diary-photo-layer" id="diaryPhotoLayer"></div>
+        <input id="diaryEntryTitle" maxlength="70" placeholder="give this day a title..." value="${escapeHTML(data.title || '')}">
+        <textarea id="diaryEntryContent" maxlength="5000" placeholder="write down your little moments...">${escapeHTML(data.content || '')}</textarea>
+        <div class="diary-paper-footer">made with love　♡</div>
+      </div>
+      <div class="diary-editor-actions">
+        <button type="button" id="diaryCancel">cancel</button>
+        <button type="button" id="diarySave">save page ♡</button>
+      </div>
+    </div>
+  `;
+
+  function renderDiaryPhotos() {
+    const layer = $('diaryPhotoLayer');
+    layer.innerHTML = diaryPhotos.map((photo, index) => `
+      <div class="diary-photo-item ${photo.selected ? 'selected' : ''}" data-photo-index="${index}" style="left:${photo.x ?? 8}%;top:${photo.y ?? 25}%;width:${photo.width ?? 30}%">
+        <img src="${photo.src}" alt="diary photo ${index + 1}" draggable="false">
+        <button type="button" class="diary-photo-delete" data-delete-photo="${index}" aria-label="delete photo">×</button>
+      </div>
+    `).join('');
+    layer.querySelectorAll('[data-delete-photo]').forEach(button => button.addEventListener('click', event => {
+      event.stopPropagation();
+      diaryPhotos.splice(Number(button.dataset.deletePhoto), 1);
+      renderDiaryPhotos();
+    }));
+    layer.querySelectorAll('.diary-photo-item').forEach(item => {
+      item.addEventListener('pointerdown', event => {
+        if (event.target.closest('button')) return;
+        event.preventDefault();
+        const index = Number(item.dataset.photoIndex);
+        const paper = $('diaryPaper');
+        const rect = paper.getBoundingClientRect();
+        const startX = event.clientX;
+        const startY = event.clientY;
+        const originalX = diaryPhotos[index].x ?? 8;
+        const originalY = diaryPhotos[index].y ?? 25;
+        item.classList.add('selected');
+        item.setPointerCapture?.(event.pointerId);
+        const move = moveEvent => {
+          diaryPhotos[index].x = Math.max(0, Math.min(78, originalX + (moveEvent.clientX - startX) / rect.width * 100));
+          diaryPhotos[index].y = Math.max(5, Math.min(82, originalY + (moveEvent.clientY - startY) / rect.height * 100));
+          item.style.left = `${diaryPhotos[index].x}%`;
+          item.style.top = `${diaryPhotos[index].y}%`;
+        };
+        const stop = () => {
+          item.removeEventListener('pointermove', move);
+          item.removeEventListener('pointerup', stop);
+          item.removeEventListener('pointercancel', stop);
+        };
+        item.addEventListener('pointermove', move);
+        item.addEventListener('pointerup', stop);
+        item.addEventListener('pointercancel', stop);
+      });
+    });
+  }
+  renderDiaryPhotos();
+
+  function compressImage(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        const image = new Image();
+        image.onerror = reject;
+        image.onload = () => {
+          const scale = Math.min(1, 1200 / Math.max(image.width, image.height));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(image.width * scale);
+          canvas.height = Math.round(image.height * scale);
+          canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', 0.78));
+        };
+        image.src = String(reader.result);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const photoInput = $('diaryPagePhoto');
+  if (photoInput) photoInput.addEventListener('change', async () => {
+    const file = photoInput.files?.[0];
+    if (!file) return;
+    try {
+      uploadedPageImage = await compressImage(file);
+      const paper = $('diaryPaper');
+      paper.style.setProperty('--diary-page-image', `url("${uploadedPageImage}")`);
+      paper.classList.add('has-custom-page-image');
+    } catch { showCalendarToast('could not load this photo ♡'); }
+  });
+
+  $('diaryExtraPhotos').addEventListener('change', async event => {
+    const files = Array.from(event.target.files || []).filter(file => file.type.startsWith('image/'));
+    for (const file of files) {
+      try {
+        const src = await compressImage(file);
+        diaryPhotos.push({ src, x: 8 + (diaryPhotos.length % 3) * 8, y: 27 + (diaryPhotos.length % 4) * 5, width: 30 });
+      } catch { showCalendarToast('could not load one of the photos ♡'); }
+    }
+    renderDiaryPhotos();
+    event.target.value = '';
+  });
+
+  $('diaryBackToPages').addEventListener('click', renderDiaryPlaceholder);
+  $('diaryCancel').addEventListener('click', renderDiaryPlaceholder);
+  $('diarySave').addEventListener('click', () => {
+    const entries = getDiaryEntries();
+    const title = $('diaryEntryTitle').value.trim();
+    const content = $('diaryEntryContent').value.trim();
+    if (!title && !content && diaryPhotos.length === 0) {
+      showCalendarToast('write a little something first ♡');
+      return;
+    }
+    const index = entries.findIndex(entry => entry.date === dateKey);
+    const savedEntry = {
+      id: existing?.id || `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      date: dateKey, title, content, template, pageImage: uploadedPageImage, photos: diaryPhotos,
+      updatedAt: new Date().toISOString()
+    };
+    if (index >= 0) entries[index] = savedEntry;
+    else entries.push(savedEntry);
+    try {
+      saveStorage(STORAGE.diary, entries);
+      selectedCalendarDate = dateKey;
+      showCalendarToast('your diary page is saved ♡');
+      renderDiaryPlaceholder();
+    } catch {
+      showCalendarToast('storage is full — try fewer or smaller photos ♡');
+    }
+  });
 }
 
 function goBack() {
