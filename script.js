@@ -18,6 +18,21 @@ const STORAGE = {
   exp: 'chocoCafeExp'
 };
 
+// Add your own transparent PNG sticker files in assets/stickers/.
+ // The filenames below are intentionally fixed so the calendar can find them.
+const STICKER_CATALOG = [
+  { file: 'hello-kitty-chocolate.png', name: 'chocolate hello kitty' },
+  { file: 'sylvanian-rabbit.png', name: 'sylvanian rabbit' },
+  { file: 'kiki-lala-latte.png', name: 'kiki and lala latte' },
+  { file: 'pink-bow-cupcake.png', name: 'pink bow cupcake' },
+  { file: 'strawberry-shortcake.png', name: 'strawberry shortcake' },
+  { file: 'chocolate-strawberry-cake.png', name: 'chocolate strawberry cake' },
+  { file: 'sylvanian-kitten.png', name: 'sylvanian kitten' },
+  { file: 'pink-chocolate-truffle.png', name: 'pink chocolate truffle' },
+  { file: 'pink-whipped-cream.png', name: 'pink whipped cream' },
+  { file: 'pink-macaron.png', name: 'pink macaron' }
+];
+
 const appInfo = {
   dessert: {title:'dessert', heading:'sweet menu', description:'a little sweetness for today'},
   anime: {title:'anime', heading:'anime room', description:'stories that stay in our hearts'},
@@ -281,6 +296,7 @@ function renderCalendar() {
     const dateKey = localDateKey(date);
     const dayEvents = events.filter(event => event.date === dateKey);
     const sticker = stickers[dateKey] || '';
+    const stickerItem = STICKER_CATALOG.find(item => item.file === sticker);
     const isToday = dateKey === todayKey;
     const isSelected = dateKey === selectedCalendarDate;
     const diaryExists = hasDiaryEntry(dateKey);
@@ -299,7 +315,7 @@ function renderCalendar() {
     cells += `
       <button type="button" class="${classes}" data-date="${dateKey}">
         <span class="calendar-day-number">${day}</span>
-        ${sticker ? `<span class="calendar-sticker">${escapeHTML(sticker)}</span>` : ''}
+        ${stickerItem ? `<img class="calendar-sticker" src="assets/stickers/${escapeHTML(stickerItem.file)}" alt="${escapeHTML(stickerItem.name)}" title="${escapeHTML(stickerItem.name)}">` : (sticker && !sticker.includes('.png') ? `<span class="calendar-sticker">${escapeHTML(sticker)}</span>` : '')}
         ${diaryExists ? '<span class="diary-marker" title="diary entry">✎</span>' : ''}
         <span class="calendar-event-dots">${eventDots}</span>
       </button>
@@ -435,8 +451,8 @@ function renderDateDetail() {
     <div class="calendar-sticker-picker" id="calendarStickerPicker" hidden>
       <small>choose a sticker</small>
       <div>
-        ${['🎀','🌷','🌸','🍓','🐻','🐰','⭐','🍰','🧸','🦢','🍒','☁️'].map(sticker =>
-          `<button type="button" data-sticker="${sticker}">${sticker}</button>`
+        ${STICKER_CATALOG.map(sticker =>
+          `<button type="button" class="sticker-choice" data-sticker="${escapeHTML(sticker.file)}" aria-label="${escapeHTML(sticker.name)}"><img src="assets/stickers/${escapeHTML(sticker.file)}" alt="${escapeHTML(sticker.name)}"></button>`
         ).join('')}
         <button type="button" data-sticker="" class="remove-sticker">remove</button>
       </div>
