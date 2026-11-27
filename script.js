@@ -141,9 +141,9 @@ function updateClock() {
   $('lockDate').textContent = dateLong.toUpperCase();
   $('lockClock').textContent = hour12;
   $('homeDate').textContent = `${dateShort} ${weekday}`;
-  $('heartTime').textContent = time;
+  $('homeClock').textContent = time;
 
-  $('heartAmPm').textContent = new Intl.DateTimeFormat('en-US', {
+  $('homeAmPm').textContent = new Intl.DateTimeFormat('en-US', {
     hour: 'numeric',
     hour12: true
   }).format(now).replace(/[0-9]/g, '').trim().toUpperCase();
@@ -154,7 +154,7 @@ function showLock() {
   lockScreen.hidden = false;
   homeScreen.hidden = true;
   appScreen.hidden = true;
-  $('lockState').textContent = 'Locked';
+  $('unlockLabel').textContent = 'Locked';
 }
 
 function showHome() {
@@ -176,7 +176,8 @@ function openApp(name) {
   appScreen.classList.toggle('diary-open', name === 'diary');
 
   $('appTitle').textContent = info.title;
-  $('appEyebrow').textContent = info.description;
+  $('appHeading').textContent = info.heading;
+  $('appDescription').textContent = info.description;
 
   if (name === 'calendar') {
     renderCalendar();
@@ -188,7 +189,7 @@ function openApp(name) {
     return;
   }
 
-  $('appBody').innerHTML = `
+  $('appPlaceholder').innerHTML = `
     <span class="placeholder-heart">♡</span>
     <span>coming soon</span>
   `;
@@ -226,7 +227,7 @@ function renderDiaryPlaceholder() {
   const dateText = formatLongDate(parseDate(dateKey));
   const templates = DIARY_TEMPLATES.filter(template => template.category === diaryCategory);
 
-  $('appBody').innerHTML = `
+  $('appPlaceholder').innerHTML = `
     <div class="diary-app">
       <div class="diary-welcome">
         <span class="diary-kicker">a little book of memories</span>
@@ -271,25 +272,25 @@ function renderDiaryPlaceholder() {
 
   $('diaryDate').addEventListener('change', event => {
     selectedCalendarDate = event.target.value || localDateKey(new Date());
-    const label = $('appBody').querySelector('.diary-section-title small');
+    const label = $('appPlaceholder').querySelector('.diary-section-title small');
     if (label) label.textContent = formatLongDate(parseDate(selectedCalendarDate));
   });
-  $('appBody').querySelectorAll('[data-category]').forEach(button => {
+  $('appPlaceholder').querySelectorAll('[data-category]').forEach(button => {
     button.addEventListener('click', () => { diaryCategory = button.dataset.category; renderDiaryPlaceholder(); });
   });
-  $('appBody').querySelectorAll('[data-template]').forEach(button => {
+  $('appPlaceholder').querySelectorAll('[data-template]').forEach(button => {
     button.addEventListener('click', () => {
       const chosenDate = $('diaryDate').value || localDateKey(new Date());
       openDiaryEditor(chosenDate, button.dataset.template, null);
     });
   });
-  $('appBody').querySelectorAll('[data-entry-id]').forEach(button => {
+  $('appPlaceholder').querySelectorAll('[data-entry-id]').forEach(button => {
     button.addEventListener('click', () => {
       const entry = getDiaryEntries().find(item => String(item.id) === button.dataset.entryId);
       if (entry) openDiaryEditor(entry.date, entry.template, entry.id);
     });
   });
-  $('appBody').querySelectorAll('[data-delete-entry]').forEach(button => {
+  $('appPlaceholder').querySelectorAll('[data-delete-entry]').forEach(button => {
     button.addEventListener('click', () => {
       const id = button.dataset.deleteEntry;
       if (!id || !confirm('delete this diary page? this cannot be undone.')) return;
@@ -310,7 +311,7 @@ function openDiaryEditor(dateKey, templateId = null, entryId = null) {
   let uploadedPageImage = existing?.pageImage || '';
   let diaryPhotos = Array.isArray(existing?.photos) ? [...existing.photos] : [];
 
-  $('appBody').innerHTML = `
+  $('appPlaceholder').innerHTML = `
     <div class="diary-editor ${category}">
       <div class="diary-editor-top">
         <button type="button" id="diaryBackToPages">‹ pages</button>
@@ -503,7 +504,7 @@ function showCalendarToast(message) {
 /* Calendar rendering */
 
 function renderCalendar() {
-  const placeholder = $('appBody');
+  const placeholder = $('appPlaceholder');
   const todayKey = localDateKey(new Date());
   const year = calendarMonth.getFullYear();
   const month = calendarMonth.getMonth();
@@ -830,9 +831,9 @@ function deleteEvent(eventId) {
 /* Phone navigation */
 
 $('unlockButton')?.addEventListener('click', showHome);
-$('hardwareHome')?.addEventListener('click', showHome);
-$('hardwareBack')?.addEventListener('click', goBack);
-$('hardwareMenu')?.addEventListener('click', goBack);
+$('homeButton')?.addEventListener('click', showHome);
+$('backButton')?.addEventListener('click', goBack);
+$('menuButton')?.addEventListener('click', goBack);
 $('appBack')?.addEventListener('click', showHome);
 
 document.querySelectorAll('.app-icon').forEach(button => {
