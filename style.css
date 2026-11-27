@@ -124,3 +124,38 @@
     }
   }
 }
+
+/* cute paper - readable diary title and contents */
+.diary-editor.cute .diary-paper input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 12px;
+  margin-bottom: 12px;
+
+  background: rgba(255, 250, 246, 0.94);
+  border: 1px solid #e5c4c8;
+  border-bottom: 2px solid #d9a5b6;
+  border-radius: 8px;
+
+  color: #76564d;
+  box-shadow: 0 2px 5px rgba(105, 65, 55, 0.08);
+}
+
+.diary-editor.cute .diary-paper textarea {
+  box-sizing: border-box;
+  padding: 10px 12px;
+
+  background: rgba(255, 250, 246, 0.86);
+  border: 1px solid rgba(229, 196, 200, 0.8);
+  border-radius: 8px;
+
+  color: #76564d;
+  line-height: 26px;
+}
+
+.diary-editor.cute .diary-paper input::placeholder,
+.diary-editor.cute .diary-paper textarea::placeholder {
+  color: #a98583;
+  opacity: 1;
+}
