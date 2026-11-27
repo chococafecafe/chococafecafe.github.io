@@ -197,20 +197,20 @@ function openApp(name) {
 
 const DIARY_TEMPLATES = [
   ...[
-    ['cute-01', 'mamegoma strawberry', 'image(20261127-115232).png'],
-    ['cute-02', 'sugarbunnies pink', 'image(20261127-115252).png'],
-    ['cute-03', 'jewelpet hearts', 'image(20261127-115305).png'],
-    ['cute-04', 'pink heart frame', 'image(20261127-115321).png'],
-    ['cute-05', 'fairytale friends', 'image(20261127-115333).png'],
-    ['cute-06', 'rose kitty frame', 'image(20261127-115927).png']
-  ].map(([id, name, file]) => ({ id, name, category: 'cute', image: `assets/diary-pages/${file}`, note: 'cute character stationery' })),
+    ['cute-01', 'mamegoma strawberry', 'cute-01-mamegoma-strawberry.png'],
+    ['cute-02', 'sugarbunnies pink', 'cute-02-sugarbunnies-pink.png'],
+    ['cute-03', 'jewelpet hearts', 'cute-03-jewelpet-hearts.png'],
+    ['cute-04', 'pink heart frame', 'cute-04-pink-heart-frame.png'],
+    ['cute-05', 'fairytale friends', 'cute-05-fairytale-friends.png'],
+    ['cute-06', 'rose kitty frame', 'cute-06-rose-kitty-frame.png']
+  ].map(([id, name, file]) => ({ id, name, category: 'cute', image: `/assets/diary-pages/${file}`, note: 'cute character stationery' })),
   ...[
-    ['vintage-01', 'antique floral frame', 'image(20261127-115411).png'],
-    ['vintage-02', 'rose corner paper', 'image(20261127-115427).png'],
-    ['vintage-03', 'classic parchment', 'image(20261127-115515).png'],
-    ['vintage-04', 'rose garden', 'image(20261127-115527).png'],
-    ['vintage-05', 'pink rose lace', 'image(20261127-115536).png']
-  ].map(([id, name, file]) => ({ id, name, category: 'vintage', image: `assets/diary-pages/${file}`, note: 'vintage paper stationery' })),
+    ['vintage-01', 'antique floral frame', 'vintage-01-antique-floral-frame.png'],
+    ['vintage-02', 'rose corner paper', 'vintage-02-rose-corner-paper.png'],
+    ['vintage-03', 'classic parchment', 'vintage-03-classic-parchment.png'],
+    ['vintage-04', 'rose garden', 'vintage-04-rose-garden.png'],
+    ['vintage-05', 'pink rose lace', 'vintage-05-pink-rose-lace.png']
+  ].map(([id, name, file]) => ({ id, name, category: 'vintage', image: `/assets/diary-pages/${file}`, note: 'vintage paper stationery' })),
   { id: 'free', name: 'my own photo', category: 'free', note: 'use a photo from your device', symbol: '＋' }
 ];
 
